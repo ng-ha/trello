@@ -1,9 +1,8 @@
-"use client";
 import Image from "next/image";
 import React from "react";
 import trelloLogo from "@/assets/images/Trello_logo.svg.png";
 import { MagnifyingGlassIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-import Avatar from "react-avatar";
+import Avatar from "./Avatar";
 
 export default function Header() {
     return (
@@ -26,7 +25,7 @@ export default function Header() {
                         />
                         <button hidden>Search</button>
                     </form>
-                    <Avatar name="ng-ha" round size="50" color="#0055D1" />
+                    <Avatar />
                 </div>
             </div>
 
