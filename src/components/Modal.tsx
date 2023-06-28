@@ -3,27 +3,34 @@
 import { useBoardStore } from "@/store/BoardStore";
 import { useModalStore } from "@/store/ModalStore";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useRef } from "react";
+import { FormEvent, Fragment, useRef } from "react";
 import TaskTypeRadioGroup from "./TaskTypeRadioGroup";
 import Image from "next/image";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 
 export default function Modal() {
-  const [image, setImage, newTaskInput, setNewTaskInput] = useBoardStore(
-    (state) => [
+  const [addTask, image, setImage, newTaskInput, setNewTaskInput, newTaskType] =
+    useBoardStore((state) => [
+      state.addTask,
       state.image,
       state.setImage,
       state.newTaskInput,
       state.setNewTaskInput,
-    ]
-  );
+      state.newTaskType,
+    ]);
   const [isOpen, closeModal] = useModalStore((state) => [
     state.isOpen,
     state.closeModal,
   ]);
   const imagePickerRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!newTaskInput) return;
+    addTask(newTaskInput, newTaskType, image);
+    setImage(null);
+    closeModal();
+  };
 
   return (
     // Use the `Transition` component at the root level
