@@ -3,7 +3,6 @@ import openai from "../../../../openai";
 export async function POST(request: Request) {
   //todos in the body of the POST req
   const { todos } = await request.json();
-  console.log(todos);
   //communicate with openai GPT
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
@@ -25,7 +24,5 @@ export async function POST(request: Request) {
     ],
   });
   const { data } = response;
-  console.log("data: ", data);
-  console.log(data.choices[0].message);
   return NextResponse.json(data.choices[0].message);
 }
