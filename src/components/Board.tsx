@@ -16,7 +16,7 @@ export default function Board() {
       state.updateTodoInDB,
     ]
   );
-  const [screenSize, setScreenSize] = useState(getCurrentDimension());
+  const [screenSize, setScreenSize] = useState({width: 1000, height: 600});
 
   useEffect(() => {
     const updateDimension = () => {
