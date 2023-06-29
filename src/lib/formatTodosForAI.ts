@@ -6,6 +6,7 @@ export const formatTodosForAI = (board: Board) => {
     map[key] = value.todos;
     return map;
   }, {} as { [key in TypedColumns]: Todo[] });
+  
   //reduce to key: value(length)
   const flatArrayCounted = Object.entries(flatArray).reduce(
     (map, [key, value]) => {
