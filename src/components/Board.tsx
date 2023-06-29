@@ -1,10 +1,11 @@
 "use client";
 
 import { useBoardStore } from "@/store/BoardStore";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { Column as IColumn } from "../../typings";
 import Column from "./Column";
+import { getCurrentDimension } from "@/lib/getCurrentDimension";
 
 export default function Board() {
   const [board, getBoard, setBoardState, updateTodoInDB] = useBoardStore(
@@ -15,6 +16,19 @@ export default function Board() {
       state.updateTodoInDB,
     ]
   );
+  const [screenSize, setScreenSize] = useState(getCurrentDimension());
+
+  useEffect(() => {
+    const updateDimension = () => {
+        setScreenSize(getCurrentDimension())
+    }
+    window.addEventListener('resize', updateDimension);
+
+    return(() => {
+        window.removeEventListener('resize', updateDimension);
+    })
+}, [screenSize])
+
   useEffect(() => {
     getBoard();
   }, [getBoard]);
@@ -89,7 +103,7 @@ export default function Board() {
 
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
-      <Droppable droppableId="board" direction="horizontal" type="column">
+      <Droppable droppableId="board" direction={screenSize.width > 768 ? 'horizontal' : 'vertical'} type="column">
         {(provided) => (
           <div
             {...provided.droppableProps}
